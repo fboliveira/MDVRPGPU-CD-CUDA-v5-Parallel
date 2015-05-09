@@ -160,18 +160,6 @@ void MDVRPProblem::setNearestDepotsFromCustomer(typedef_vectorMatrix<int> neares
     this->nearestDepotsFromCustomer = nearestDepotsFromCustomer;
 }
 
-ManagedMatrix<float>& MDVRPProblem::getMngCustomerDistances() {
-	return mngCustomerDistances;
-}
-
-ManagedMatrix<float>& MDVRPProblem::getMngDepotDistances(){
-	return mngDepotDistances;
-}
-
-ManagedArray<int>& MDVRPProblem::getMngDemand() {
-	return mngDemand;
-}
-
 /*
  * Method
  */
@@ -221,21 +209,9 @@ void MDVRPProblem::allocateMemory() {
 
     this->setAllocation(allocation);
 
-    // GPU allocation
-    this->getMngCustomerDistances().setLines(this->getCustomers());
-    this->getMngCustomerDistances().setRows(this->getCustomers());
-    this->getMngCustomerDistances().init();
-
-    this->getMngDepotDistances().setLines(this->getDepots());
-    this->getMngDepotDistances().setRows(this->getCustomers());
-    this->getMngDepotDistances().init();
-
-    this->getMngDemand().setCols(this->getCustomers());
-    this->getMngDemand().init();
-
 }
 
-bool MDVRPProblem::processInstanceFiles(char* dataFile, char* solutionFile, char* instCode) {
+void MDVRPProblem::processInstanceFiles(char* dataFile, char* solutionFile, char* instCode) {
 
     FILE *data;
     FILE *solution;
@@ -249,12 +225,12 @@ bool MDVRPProblem::processInstanceFiles(char* dataFile, char* solutionFile, char
 
     if (data == NULL) {
         printf("Erro ao abrir o arquivo = %s \n\n", dataFile);
-        return false;
+        return;
     }
 
     if (solution == NULL) {
         printf("Erro ao abrir o arquivo = %s \n\n", dataFile);
-        return false;
+        return;
     }
 
     this->setInstCode(instCode);
@@ -289,7 +265,6 @@ bool MDVRPProblem::processInstanceFiles(char* dataFile, char* solutionFile, char
 
         this->getCustomerPoints().at(i) = point;
         this->getDemand().at(i) = valueInt;
-        this->getMngDemand().set(i, valueInt);
 
         while (getc(data) != '\n');
     }
@@ -311,8 +286,6 @@ bool MDVRPProblem::processInstanceFiles(char* dataFile, char* solutionFile, char
 
     fclose(solution);
     fclose(data);
-
-    return true;
 
 }
 
@@ -337,9 +310,6 @@ void MDVRPProblem::calculateMatrixDistance() {
                 // menor
                 this->getCustomerDistances().at(i).at(j) = pow(10, 3);
             }
-
-            this->getMngCustomerDistances().set(i, j, this->getCustomerDistances().at(i).at(j));
-
         }
     }
 
@@ -354,7 +324,6 @@ void MDVRPProblem::calculateMatrixDistance() {
                     this->getCustomerPoints().at(j).y);
 
             this->getDepotDistances().at(i).at(j) = dist;
-            this->getMngDepotDistances().set(i, j, dist);
 
         }
     }

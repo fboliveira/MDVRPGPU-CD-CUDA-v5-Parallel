@@ -102,7 +102,7 @@ void PathRelinking::operate(IndividualsGroup& initialSolution, IndividualsGroup&
                 // Best insertion
                 newSolution.getIndividuals().at(pg.getDepot()).getRoutes().at(route).insertBestPosition(pg.getCustomer());                
                 //newSolution.getIndividuals().at(pg.getDepot()).getRoutes().at(route).addAtFront(pg.getCustomer());
-                ManagedLocalSearch::operateMoves(this->getProblem(), this->getConfig(),
+                LocalSearch::operateMoves(this->getProblem(), this->getConfig(), 
                         newSolution.getIndividuals().at(pg.getDepot()).getRoutes().at(route),
                         newSolution.getIndividuals().at(pg.getDepot()).getRoutes().at(route), true);
 

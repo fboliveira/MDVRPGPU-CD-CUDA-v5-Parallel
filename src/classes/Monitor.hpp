@@ -100,7 +100,7 @@ public:
     bool isTerminated() const;
     void setTerminated(bool terminated);
 
-    ::mutex& getMutexLocker();
+    std::mutex& getMutexLocker();
     
     bool isDoUpdateBest() const;
     void setDoUpdateBest(bool doUpdateBest);

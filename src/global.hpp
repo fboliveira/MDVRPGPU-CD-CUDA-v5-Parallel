@@ -10,7 +10,6 @@
 #include <iterator>
 #include <string>
 #include <time.h>
-#include <thrust/device_vector.h>
 
 using namespace std;
 
@@ -19,9 +18,9 @@ using namespace std;
 #define	GLOBAL_H
 
 // INSTANCE TEST
-#define INST_TEST "pfbo02"
+#define INST_TEST "p01"
 
-#define SOURCE 3
+#define SOURCE 1
 
 #if SOURCE==1
 // LOCAL
@@ -30,19 +29,12 @@ using namespace std;
 //#define LOG_RUN_FILE "/Users/fernando/Temp/MDVRP/experiments/mdvrpcpu-teste.txt"
 #define LOG_RUN_FILE "/Users/fernando/Temp/MDVRP/mdvrpcpu-20.txt"
 
-#elif SOURCE==2
+#else
 
 // UFMG
 #define BASE_DIR_DAT "/home/fernando/experiments/instances/dat/" 
 #define BASE_DIR_SOL "/home/fernando/experiments/instances/sol/" 
 #define LOG_RUN_FILE "/home/fernando/experiments/mdvrpcpu-97-01-01.txt"
-
-#else
-
-// HUGO
-#define BASE_DIR_DAT "/home/fernando/Temp/MDVRP/dat/"
-#define BASE_DIR_SOL "/home/fernando/Temp/MDVRP/sol/"
-#define LOG_RUN_FILE "/home/fernando/Temp/MDVRP/mdvrpGPU-hugo-01-01.txt"
 
 #endif
 
@@ -63,8 +55,6 @@ using namespace std;
 
 #define NUM_MAX_DEP 9
 #define NUM_MAX_CLI 360
-
-//#define MANAGED 0
 
 enum class Enum_Algorithms {
     SSGA,
@@ -93,9 +83,6 @@ enum Enum_Local_Search_Type
 
 template<class T>
 using typedef_vectorMatrix = vector<vector<T>>;
-
-template<class T>
-using typedef_deviceVectorMatrix = thrust::device_vector<thrust::device_vector<T>>;
 
 using typedef_vectorIntIterator = vector<int>::iterator;
 using typedef_vectorIntSize = vector<int>::size_type;

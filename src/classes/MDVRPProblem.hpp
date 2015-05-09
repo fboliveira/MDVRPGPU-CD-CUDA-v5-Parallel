@@ -17,8 +17,6 @@
 #include "../global.hpp"
 #include "Util.hpp"
 #include "Monitor.hpp"
-#include "../cuda/ManagedMatrix.h"
-#include "../cuda/ManagedArray.h"
 
 using namespace std;
 
@@ -48,10 +46,6 @@ private:
     typedef_vectorMatrix<int> allocation; // In which depots customers are allocated [ c x d ]
 
     Monitor monitor = Monitor();
-
-    ManagedMatrix<float> mngCustomerDistances;
-    ManagedMatrix<float> mngDepotDistances;
-    ManagedArray<int> mngDemand;
 
 public:
 
@@ -100,16 +94,12 @@ public:
     void setNearestCustomersFromDepot(typedef_vectorMatrix<int> nearestCustomersFromDepot);
     void setNearestDepotsFromCustomer(typedef_vectorMatrix<int> nearestDepotsFromCustomer);
 
-    bool processInstanceFiles(char *dataFile, char *solutionFile, char* instCode);
+    void processInstanceFiles(char *dataFile, char *solutionFile, char* instCode);
 
     void getDepotGroup(int depot, vector<int>& customers);
     void getNearestCustomerFromCustomerOnDepot(int customer, int depot, vector<int>& customers);
 
     Monitor& getMonitor();
-
-	ManagedMatrix<float>& getMngCustomerDistances();
-	ManagedMatrix<float>& getMngDepotDistances();
-	ManagedArray<int>& getMngDemand();
 
     void print();
     void printAllocation();

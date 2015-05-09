@@ -28,7 +28,7 @@ int main(int argc, char** argv) {
 
     time_t start, end;
 
-    char inst[10], dat[300], sol[300];
+    char inst[4], dat[300], sol[300];
 
     // FATORES A SEREM AVALIADOS
     bool change = false;
@@ -72,13 +72,7 @@ int main(int argc, char** argv) {
     Random::randomize();
 
     // Read data file
-	if (!problem->processInstanceFiles(dat, sol, inst)) {
-		std::cout << "Press enter to continue ...";
-
-		std::cin.get();
-		return EXIT_FAILURE;
-	}
-
+    problem->processInstanceFiles(dat, sol, inst);
     //problem->printAllocation();
     //problem->printAllocationDependecy();
     //return 0;
@@ -150,17 +144,6 @@ int main(int argc, char** argv) {
     printf("Busca Local.: %s\n", config->getLocalSearchType() == RANDOM ? "BLA" : "BLS");
     cout << "\n\n";
 
-    //    problem->getMngDepotDistances().print();
-    //    cout << "\n\n";
-    //    problem->getMngCustomerDistances().print();
-    //    cout << "\n\n";
-    //    cout << "\n\n";
-    //	  problem->print();
-    //    return 0;
-
-    //    problem->getMngDemand().print();
-    //    return 0;
-
     ESCoevolMDVRP esCoevolMDVRP = ESCoevolMDVRP(problem, config);
     esCoevolMDVRP.run();
 
@@ -174,13 +157,5 @@ int main(int argc, char** argv) {
     delete problem;
     delete config;
 
-    cudaDeviceReset();
-
-	if (config->isDebug()) {
-		std::cout << "Press enter to continue ...";
-
-		std::cin.get();
-	}
-
-	return EXIT_SUCCESS;
+    return 0;
 }

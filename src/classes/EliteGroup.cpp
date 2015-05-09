@@ -28,11 +28,11 @@ problem(problem), config(config) {
  * Getters and Setters
  */
 
-::vector<IndividualsGroup>& EliteGroup::getEliteGroup() {
+vector<IndividualsGroup>& EliteGroup::getEliteGroup() {
     return this->eliteGroup;
 }
 
-void EliteGroup::setEliteGroup(::vector<IndividualsGroup> eliteGroup) {
+void EliteGroup::setEliteGroup(vector<IndividualsGroup> eliteGroup) {
     this->eliteGroup = eliteGroup;
 }
 
@@ -85,11 +85,11 @@ void EliteGroup::setLocked(bool locked) {
     this->locked = locked;
 }
 
-::vector<IndividualsGroup>& EliteGroup::getPool() {
+vector<IndividualsGroup>& EliteGroup::getPool() {
     return pool;
 }
 
-void EliteGroup::setPool(::vector<IndividualsGroup> pool) {
+void EliteGroup::setPool(vector<IndividualsGroup> pool) {
     this->pool = pool;
 }
 
@@ -161,7 +161,7 @@ void EliteGroup::localSearch() {
 
     if (this->getConfig()->getProcessType() == Enum_Process_Type::MONO_THREAD) {
 
-        ::for_each(this->getEliteGroup().begin(), this->getEliteGroup().end(), [&] (IndividualsGroup & eliteIndividual) {
+        for_each(this->getEliteGroup().begin(), this->getEliteGroup().end(), [&] (IndividualsGroup & eliteIndividual) {
 
             if (!this->getProblem()->getMonitor().isTerminated()) {
                 eliteIndividual.localSearch();
@@ -183,9 +183,9 @@ void EliteGroup::localSearch() {
         this->getProblem()->getMonitor().setEliteGroupLocalSearch(true);
 
         //printf("Start: EliteGroup::localSearch();\n");
-        ::vector<std::thread> threads;
+        std::vector<std::thread> threads;
 
-        ::for_each(this->getPool().begin(), this->getPool().end(), [&] (IndividualsGroup & eliteIndividual) {
+        for_each(this->getPool().begin(), this->getPool().end(), [&] (IndividualsGroup & eliteIndividual) {
 
             if (!this->getProblem()->getMonitor().isTerminated()) {
                 threads.push_back(std::thread([&eliteIndividual, this]() {
@@ -205,7 +205,7 @@ void EliteGroup::localSearch() {
         for (auto& th : threads)
             th.join();
 
-        ::for_each(this->getPool().begin(), this->getPool().end(), [&] (IndividualsGroup & eliteIndividual) {
+        for_each(this->getPool().begin(), this->getPool().end(), [&] (IndividualsGroup & eliteIndividual) {
             //this->update(eliteIndividual);            
 
             if (Util::isBetterSolution(eliteIndividual.getTotalCost(), this->getBest().getTotalCost())) {
@@ -253,7 +253,7 @@ void EliteGroup::manager() {
 
             //if (this->getProblem()->getMonitor().getMutexLocker().try_lock()) {
 
-            ::for_each(this->getEliteGroup().begin(), this->getEliteGroup().end(), [&] (IndividualsGroup & eliteIndividual) {
+            for_each(this->getEliteGroup().begin(), this->getEliteGroup().end(), [&] (IndividualsGroup & eliteIndividual) {
                 this->updatePool(eliteIndividual);
             });
 
@@ -269,7 +269,7 @@ void EliteGroup::printValues() {
 
     cout << "Elite Group values...:\n\n";
 
-    ::for_each(this->getEliteGroup().begin(), this->getEliteGroup().end(), [&] (IndividualsGroup & eliteIndividual) {
+    for_each(this->getEliteGroup().begin(), this->getEliteGroup().end(), [&] (IndividualsGroup & eliteIndividual) {
         printf("=> %.2f\n", eliteIndividual.getTotalCost());
     });
 

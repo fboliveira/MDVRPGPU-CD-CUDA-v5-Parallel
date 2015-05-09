@@ -233,7 +233,7 @@ void IndividualsGroup::localSearch(bool fullImprovement) {
                         else
                             ru = u;
 
-                        if (this->getIndividuals().at(indU).getRoutes().at(ru).getTour()->size() == 0)
+                        if (this->getIndividuals().at(indU).getRoutes().at(ru).getTour().size() == 0)
                             continue;
 
                         for (int v = 0; v < this->getIndividuals().at(indV).getRoutes().size(); ++v) {
@@ -246,7 +246,7 @@ void IndividualsGroup::localSearch(bool fullImprovement) {
                             else
                                 rv = v;
 
-                            if (this->getIndividuals().at(indV).getRoutes().at(rv).getTour()->size() == 0)
+                            if (this->getIndividuals().at(indV).getRoutes().at(rv).getTour().size() == 0)
                                 continue;
 
                             vector<int> moves;
@@ -266,7 +266,7 @@ void IndividualsGroup::localSearch(bool fullImprovement) {
                                 bool equal = indU == indV && ru == rv;
 
                                 do {
-                                    result = ManagedLocalSearch::processMoveDepotRoute(this->getIndividuals().at(indU).getRoutes().at(ru),
+                                    result = LocalSearch::processMoveDepotRoute(this->getIndividuals().at(indU).getRoutes().at(ru),
                                             this->getIndividuals().at(indV).getRoutes().at(rv), move, equal);
 
                                     if (result)
