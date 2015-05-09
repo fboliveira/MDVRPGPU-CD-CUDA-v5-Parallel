@@ -235,7 +235,7 @@ void MDVRPProblem::allocateMemory() {
 
 }
 
-void MDVRPProblem::processInstanceFiles(char* dataFile, char* solutionFile, char* instCode) {
+bool MDVRPProblem::processInstanceFiles(char* dataFile, char* solutionFile, char* instCode) {
 
     FILE *data;
     FILE *solution;
@@ -249,12 +249,12 @@ void MDVRPProblem::processInstanceFiles(char* dataFile, char* solutionFile, char
 
     if (data == NULL) {
         printf("Erro ao abrir o arquivo = %s \n\n", dataFile);
-        return;
+        return false;
     }
 
     if (solution == NULL) {
         printf("Erro ao abrir o arquivo = %s \n\n", dataFile);
-        return;
+        return false;
     }
 
     this->setInstCode(instCode);
@@ -311,6 +311,8 @@ void MDVRPProblem::processInstanceFiles(char* dataFile, char* solutionFile, char
 
     fclose(solution);
     fclose(data);
+
+    return true;
 
 }
 

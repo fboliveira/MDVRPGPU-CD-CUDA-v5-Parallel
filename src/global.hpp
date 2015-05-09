@@ -10,6 +10,7 @@
 #include <iterator>
 #include <string>
 #include <time.h>
+#include <thrust/device_vector.h>
 
 using namespace std;
 
@@ -92,6 +93,9 @@ enum Enum_Local_Search_Type
 
 template<class T>
 using typedef_vectorMatrix = vector<vector<T>>;
+
+template<class T>
+using typedef_deviceVectorMatrix = thrust::device_vector<thrust::device_vector<T>>;
 
 using typedef_vectorIntIterator = vector<int>::iterator;
 using typedef_vectorIntSize = vector<int>::size_type;

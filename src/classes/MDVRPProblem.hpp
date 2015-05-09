@@ -100,7 +100,7 @@ public:
     void setNearestCustomersFromDepot(typedef_vectorMatrix<int> nearestCustomersFromDepot);
     void setNearestDepotsFromCustomer(typedef_vectorMatrix<int> nearestDepotsFromCustomer);
 
-    void processInstanceFiles(char *dataFile, char *solutionFile, char* instCode);
+    bool processInstanceFiles(char *dataFile, char *solutionFile, char* instCode);
 
     void getDepotGroup(int depot, vector<int>& customers);
     void getNearestCustomerFromCustomerOnDepot(int customer, int depot, vector<int>& customers);

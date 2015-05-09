@@ -72,7 +72,13 @@ int main(int argc, char** argv) {
     Random::randomize();
 
     // Read data file
-    problem->processInstanceFiles(dat, sol, inst);
+	if (!problem->processInstanceFiles(dat, sol, inst)) {
+		std::cout << "Press enter to continue ...";
+
+		std::cin.get();
+		return EXIT_FAILURE;
+	}
+
     //problem->printAllocation();
     //problem->printAllocationDependecy();
     //return 0;
@@ -169,5 +175,12 @@ int main(int argc, char** argv) {
     delete config;
 
     cudaDeviceReset();
-    return 0;
+
+	if (config->isDebug()) {
+		std::cout << "Press enter to continue ...";
+
+		std::cin.get();
+	}
+
+	return EXIT_SUCCESS;
 }
